@@ -1,0 +1,29 @@
+{
+    "persons": [
+      {
+        "name": "Arto Hellas",
+        "number": "040-345 67852",
+        "id": 1
+      },
+      {
+        "name": "Dan Smith",
+        "id": 144950,
+        "number": "49-346972 9876"
+      },
+      {
+        "name": "Ada Lovelace",
+        "number": "39-3456798 45",
+        "id": 144951
+      },
+      {
+        "name": "Clark Kent",
+        "number": "112",
+        "id": 144952
+      },
+      {
+        "name": "Kerttu",
+        "number": "4577",
+        "id": 144953
+      }
+    ]
+  }
