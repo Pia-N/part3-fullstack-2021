@@ -44,13 +44,6 @@ app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/info', (req, res) => {
-  const howMany = persons.length.toString()
-  const info = `Phonebook has information of ${howMany} people`
-  //const day = new Date()
-  res.send(info)
-})
-
 app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
@@ -64,6 +57,20 @@ app.get('/api/persons/:id', (request, response) => {
   } else {
     response.status(404).end()
   }
+})
+
+app.get('/api/info', (req, res) => {
+  const howMany = persons.length.toString()
+  const info = `Phonebook has information of ${howMany} people.<br> ${new Date()}</br>`
+  
+  res.send(info)
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
 })
 
 const PORT = 3001
