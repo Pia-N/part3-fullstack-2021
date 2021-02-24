@@ -60,7 +60,7 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
-app.get('/api/info', (req, res) => {
+app.get('/info', (req, res) => {
   const howMany = persons.length.toString()
   const info = `Phonebook has information of ${howMany} people.<br> ${new Date()}</br>`
   
@@ -93,7 +93,7 @@ app.post('/api/persons', (request, response) => {
   if (!body.name || !body.number) {
 
     return response.status(400).json({ 
-      error: 'content missing' 
+      error: 'name or number missing' 
     })
   }
   if(existingPerson){
