@@ -2,6 +2,25 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
+    "number": "08000"
+}
+
+### Nameless
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
     "name": "",
-    "number": "0000088802"
+    "number": "1242488802"
+}
+
+### Numberless
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Pekka"
+    
+    
 }
