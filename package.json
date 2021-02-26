@@ -12,7 +12,6 @@
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pia-N/part3-fullstack-2021.git"
@@ -31,6 +30,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongoose": "^5.11.18",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
