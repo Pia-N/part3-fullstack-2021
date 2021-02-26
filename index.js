@@ -1,17 +1,16 @@
 require('dotenv').config()
-const express = require("express");
-const app = express();
+const express = require('express')
+const app = express()
 
-app.use(express.json());
+app.use(express.json())
 app.use(express.static('build'))
 
-const morgan = require("morgan");
+const morgan = require('morgan')
 
 const Person = require('./models/person')
 
 const cors = require('cors')
 app.use(cors())
-
 
 //let persons = []
 
@@ -20,17 +19,16 @@ app.use(morgan((tokens, req, res) => {
     tokens.method(req, res),
     tokens.url(req, res),
     tokens.status(req, res),
-    tokens.res(req, res, "content-length"),
-    "-",
-    tokens["response-time"](req, res), 'ms',
+    tokens.res(req, res, 'content-length'),
+    '-',
+    tokens['response-time'](req, res), 'ms',
     JSON.stringify(req.body)
-  ].join(" ")
+  ].join(' ')
 })
 )
 
-
-app.get("/", (request, res) => {
-  res.send("<h1>Hello World!</h1>");
+app.get('/', (request, res) => {
+  res.send('<h1>Hello World!</h1>')
 })
 
 app.get('/api/persons', (request, response, next) => {
@@ -39,7 +37,6 @@ app.get('/api/persons', (request, response, next) => {
   })
     .catch(error => next(error))
 })
-
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
@@ -54,7 +51,7 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.get("/info", (request, response, next) => {
+app.get('/info', (request, response, next) => {
   Person.countDocuments({})
     .then(count => {
       response.send(`Phonebook has information of ${count} people.<br> ${new Date()}</br>`)
@@ -67,16 +64,16 @@ app.get("/info", (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
 })
 
 //POST
-app.post("/api/persons", (request, response, next) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
-  console.log(body, "body")
+  console.log(body, 'body')
 
 
   /*if (!body.name) {
