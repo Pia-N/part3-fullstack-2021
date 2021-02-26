@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const app = express();
 
@@ -5,6 +6,8 @@ app.use(express.json());
 app.use(express.static('build'))
 
 const morgan = require("morgan");
+
+const Person = require('./models/person')
 
 const cors = require('cors')
 app.use(cors())
@@ -61,12 +64,15 @@ app.use(morgan((tokens, req, res) => {
 })
 )
 
+
 app.get("/", (request, res) => {
   res.send("<h1>Hello World!</h1>");
 })
 
-app.get("/api/persons", (request, response) => {
-  response.json(persons);
+app.get('/api/persons', (request, response) => {
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
 })
 
 app.get("/api/persons/:id", (request, response) => {
@@ -87,6 +93,7 @@ app.get("/info", (request, response) => {
   response.send(info)
 })
 
+//DELETE
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter((person) => person.id !== id)
@@ -99,6 +106,7 @@ const generateId = () => {
   return randomId + 1
 };
 
+//POST
 app.post("/api/persons", (request, response) => {
   const body = request.body
   console.log(body, "body")
@@ -121,14 +129,15 @@ app.post("/api/persons", (request, response) => {
     })
   }
 
-  const person = {
+  const person = new Person({
     name: body.name,
-    number: body.number,
-    id: generateId()
-  }
+    number: body.number
+  })
+  person.save().then(response => {
+    console.log(`Added ${person.name} number ${person.number} to phonebook.`)
+  })
 
   persons = persons.concat(person)
-
   response.json(person)
 })
 
