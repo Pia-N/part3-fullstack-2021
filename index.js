@@ -61,7 +61,7 @@ app.get('/info', (request, response, next) => {
 })
 
 //DELETE
-
+//henkilön tietojen poisto
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
     .then(() => {
@@ -105,6 +105,7 @@ app.post('/api/persons', (request, response, next) => {
 
 })
 //PUT
+//henkilön tietojen muutos
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
 
@@ -126,7 +127,7 @@ const unknownEndpoint = (request, response) => {
 }
 // olemattomien osoitteiden käsittely
 app.use(unknownEndpoint)
-
+// virheidenkäsittelijä tulee sijoittaa tarkoin ja oikeaan paikkaan koodissa
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
