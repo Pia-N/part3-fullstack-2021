@@ -13,43 +13,7 @@ const cors = require('cors')
 app.use(cors())
 
 
-let persons = [
-  {
-    name: "Arto Hellas",
-    number: "040-345 67852",
-    id: 1,
-  },
-  {
-    name: "Dan Smith",
-    id: 144950,
-    number: "49-346972 9876",
-  },
-  {
-    name: "Ada Lovelace",
-    number: "39-3456798 45",
-    id: 144951,
-  },
-  {
-    name: "Clark Kent",
-    number: "112",
-    id: 144952,
-  },
-  {
-    name: "Kerttu",
-    number: "4577",
-    id: 144953,
-  },
-  {
-    name: "Mikko",
-    number: "123456",
-    id: 144954,
-  },
-  {
-    name: "Kikka",
-    number: "123886",
-    id: 144955,
-  },
-];
+//let persons = []
 
 app.use(morgan((tokens, req, res) => {
   return [
@@ -115,7 +79,7 @@ app.post("/api/persons", (request, response, next) => {
   console.log(body, "body")
 
 
-  if (!body.name) {
+  /*if (!body.name) {
     return response.status(400).json({
       error: "name missing"
     })
@@ -128,21 +92,20 @@ app.post("/api/persons", (request, response, next) => {
 
   if (persons.find(p => p.name.toUpperCase() === body.name.toUpperCase())) {
     return response.status(400).json({
-      error: "name already exists"
+      error: "name must be unique"
     })
-  }
+  }*/
 
   const person = new Person({
     name: body.name,
     number: body.number
   })
-  person.save().then(response => {
-    console.log(`Added ${person.name} number ${person.number} to phonebook.`)
-  })
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
     .catch(error => next(error))
 
-  persons = persons.concat(person)
-  response.json(person)
 })
 //PUT
 app.put('/api/persons/:id', (request, response, next) => {
@@ -173,7 +136,9 @@ const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
   }
-
+  else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
   next(error)
 }
 app.use(errorHandler)
